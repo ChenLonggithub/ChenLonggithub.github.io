@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="description" content="记录每一瞬间">
+
+
+    <meta name="keywords" content="Java、博客、学习、感悟、程序员">
+
+
+<title>Ajax返回的3种类型 | 水</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Clong&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Clong&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Ajax返回的3种类型</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">clong</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">三月 28, 2019&nbsp;&nbsp;23:38:38</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/前端/">前端</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="Ajax返回的3种类型"><a href="#Ajax返回的3种类型" class="headerlink" title="Ajax返回的3种类型"></a>Ajax返回的3种类型</h1><h4 id="使用Ajax异步返回的两种类型"><a href="#使用Ajax异步返回的两种类型" class="headerlink" title="使用Ajax异步返回的两种类型"></a>使用Ajax异步返回的两种类型</h4><p>Ajax = 异步 JavaScript 和 XML，Ajax 是一种用于创建快速动态网页的技术，通过在后台与服务器进行少量数据交换，Ajax 可以使网页实现异步更新。这意味着可以在不重新加载整个网页的情况下，对网页的某部分进行更新，传统的网页（不使用 Ajax）如果需要更新内容，必需重载整个网页面。看下图传统与ajax的区别：</p>
+<p><img src="http://img.cloong.top/ajax%E5%92%8C%E4%BC%A0%E7%BB%9F%E7%9A%84%E5%8C%BA%E5%88%AB.png" alt></p>
+<h6 id="传统的Ajax写法："><a href="#传统的Ajax写法：" class="headerlink" title="传统的Ajax写法："></a>传统的Ajax写法：</h6><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @function 利用ajax动态交换数据(Text/HTML格式)</span></span><br><span class="line"><span class="comment"> * @param url   要提交请求的页面</span></span><br><span class="line"><span class="comment"> * @param jsonData  要提交的数据,利用Json传递</span></span><br><span class="line"><span class="comment"> * @param getMsg  这个函数可以获取到处理后的数据</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ajax_demo</span>(<span class="params">url,jsonData,getMsg</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//创建Ajax对象,ActiveXObject兼容IE5,6</span></span><br><span class="line">    <span class="keyword">var</span> oAjax = <span class="built_in">window</span>.XMLHttpRequest?<span class="keyword">new</span> XMLHttpRequest():<span class="keyword">new</span> ActiveXObject(<span class="string">"Microsoft.XMLHTTP"</span>);</span><br><span class="line">    <span class="comment">//打开请求</span></span><br><span class="line">    oAjax.open(<span class="string">'POST'</span>,url,<span class="literal">true</span>);<span class="comment">//方法,URL,异步传输</span></span><br><span class="line">    <span class="comment">//发送请求</span></span><br><span class="line">    <span class="keyword">var</span> data = <span class="string">''</span>;<span class="comment">//拼装数据</span></span><br><span class="line">    oAjax.setRequestHeader(<span class="string">"Content-type"</span>,<span class="string">"application/x-www-form-urlencoded"</span>);</span><br><span class="line">    oAjax.send(data);</span><br><span class="line">    <span class="comment">//接收返回,当服务器有东西返回时触发</span></span><br><span class="line">    oAjax.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(oAjax.readyState == <span class="number">4</span> &amp;&amp; oAjax.status == <span class="number">200</span>)&#123;</span><br><span class="line">            <span class="keyword">var</span> text = oAjax.responseText;</span><br><span class="line">            <span class="comment">//处理数据</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="使用jQuery使用："><a href="#使用jQuery使用：" class="headerlink" title="使用jQuery使用："></a>使用jQuery使用：</h6><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ajax_demo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> form_data = <span class="string">''</span>;</span><br><span class="line">        $.ajax(&#123;</span><br><span class="line">            type:<span class="string">'POST'</span>,</span><br><span class="line">            url:<span class="string">'upload.do'</span>,</span><br><span class="line">            data:form_data,</span><br><span class="line">            cache : <span class="literal">false</span>,</span><br><span class="line">            processData : <span class="literal">false</span>,</span><br><span class="line">            contentType : <span class="literal">false</span>,</span><br><span class="line">        &#125;).success(<span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> result = <span class="built_in">JSON</span>.parse(data);</span><br><span class="line">            alert(result.back());</span><br><span class="line">        &#125;).error(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            alert(<span class="string">"上传失败！"</span>)</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>后端返回前端的3种类型</p>
+<p>1、返回html（jsp）格式的数据,后端处理完后，直接返回一个页面。前端直接将的到HTML添加到页面就行了，</p>
+<p>2、返回xml格式的数据</p>
+<p>3、返回json格式的数据</p>
+<h4 id="解析HTML"><a href="#解析HTML" class="headerlink" title="解析HTML"></a>解析HTML</h4><p>HTML由一些普通的文本组成，如果服务器通过XMLHttpRequest对象来发送HTML，文本将存储在ResponseText属性中。不必从ResponseText属性中读取数据，因为它本身就是希望的数据格式，可以直接将它插入页面中。<br>插入HTML代码最简单的方法是更新这个元素的innerHTML属性。<br>优点：<br>（1）从服务器端发送的HTML代码在浏览器端不需要用JavaScript进行解析；<br>（2）HTML的可读性好。<br>（3）HTML代码与innerHTML属性搭配，效率高。<br>缺点：<br>（1）若需要通过Ajax更新一篇文档的多个部分，HTML不合适（2）innerHTML并非DOM标准。</p>
+<h4 id="解析XML"><a href="#解析XML" class="headerlink" title="解析XML"></a>解析XML</h4><h6 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h6><p>1）XML是一种通用的数据格式。<br>2）不必把数据强加到已定义好的格式中，而是要为数据自定义合适的标记。<br>3）利用DOM可以完全掌控文档。</p>
+<h6 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h6><p>1）如果文档来自于服务器，就必须保证文档含有正确的首部信息，若文档类型不正确，那么requestXML属性将是空的。2）当浏览器接收到长的XML文件后，DOM解析可能会很复杂。</p>
+<h4 id="解析JSON"><a href="#解析JSON" class="headerlink" title="解析JSON"></a>解析JSON</h4><p>JSON是一种简单的数据格式，比XML更加轻巧。JSON 是JavaScript原生格式，这意味着在javascript中处理JSON数据不需要任何特殊的API或者工具包。JSON的规则很简单：对象是一个无序的 “名称/值”对集合，一个对象以“{”（左括号）开始，以“}”（右括号）结束，每一个名称后面跟一个“:”（冒号），名称/值之间用逗号分隔开。JSON用冒号而不是等号来赋值。每一条赋值语句用逗号分开。整个对象用大括号封装起来，可用大括号分级嵌套数据。对象描述中存储的数据可以是字符串，数字或布尔值，对象描述也可存储函数，即对象的方法。JSON只是一种文本字符串，它被存储在responseText属性中。为了读取存储在responseText属性中的JSON数据，需要用到javascript的eval()语句，eval函数会把一个字符串当做它的一个参数，然后这个字符串会被当做javascript代码来执行，因为JSON的字符串就是javascript代码构成的，所以它本身是可以执行的。JSON提供了json.js包后，使用parseJSON()方法可以将JSON对象解析为js对象。</p>
+<h6 id="优点：-1"><a href="#优点：-1" class="headerlink" title="优点："></a>优点：</h6><p>（1）作为一种数据传输格式，JSON与XML很相似，但是它更加灵巧。<br>（2）JSON不需要从服务器端发送含有特定内容类型的首部信息。</p>
+<h6 id="缺点：-1"><a href="#缺点：-1" class="headerlink" title="缺点："></a>缺点：</h6><p>（1）语法过于严谨。<br>（2）代码不易读。<br>（3）eval函数存在风险。</p>
+<h5 id="注意：若从服务器端返回json字符串，则属性名必须使用双引号（需要转义），不能使用单引号。"><a href="#注意：若从服务器端返回json字符串，则属性名必须使用双引号（需要转义），不能使用单引号。" class="headerlink" title="注意：若从服务器端返回json字符串，则属性名必须使用双引号（需要转义），不能使用单引号。"></a>注意：若从服务器端返回json字符串，则属性名必须使用双引号（需要转义），不能使用单引号。</h5>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>clong</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://coldwater.com/2019/03/29/Ajax返回的3种类型/">http://coldwater.com/2019/03/29/Ajax返回的3种类型/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/前端/"># 前端</a>
+                    
+                        <a href="/tags/ajax/"># ajax</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/04/29/如何自定义点击按钮上传图片和文件的上传、下载/">如何自定义点击按钮上传图片和文件的上传、下载</a>
+            
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© clong | JGSU | Powered by Hexo </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
