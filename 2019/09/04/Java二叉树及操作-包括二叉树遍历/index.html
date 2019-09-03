@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="description" content="记录每一瞬间">
+
+
+    <meta name="keywords" content="Java、博客、学习、感悟、程序员">
+
+
+<title>Java二叉树及操作(包括二叉树遍历) | 水</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Clong&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Clong&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Java二叉树及操作(包括二叉树遍历)</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">clong</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">九月 3, 2019&nbsp;&nbsp;22:11:46</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/category/Java/">Java</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>前言：Java数据结构与算法专题会不定时更新，欢迎各位读者监督。本篇主要介绍二叉树的概念、二叉树的表示、二叉树的操作（三种遍历方式实现、求二叉树的子树、求节点的父节点、二叉树高度….），可能是考试中的，也可能是面试中的。</p>
+<h4 id="1、二叉树"><a href="#1、二叉树" class="headerlink" title="1、二叉树"></a>1、二叉树</h4><h5 id="1-二叉树的定义"><a href="#1-二叉树的定义" class="headerlink" title="1.二叉树的定义"></a>1.二叉树的定义</h5><p>二叉树（Binary Tree）是有限个节点的集合，这个集合可以是空集，也可以是一个根节点和两颗不相交的子二叉树组成的集合，其中一颗树叫根的左子树，另一颗树叫右子树。所以二叉树是一个递归地概念。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">值得注意的是二叉树规定自己可以使空集，而且很明确的区分了一个根节点的两个子树分别是左子树和右子树，如下图所示的两棵树就不是同一棵树。</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://segmentfault.com/img/bV91E9?w=448&h=334" alt="图片描述"></p>
+<h5 id="2-两种特殊的二叉树"><a href="#2-两种特殊的二叉树" class="headerlink" title="2.两种特殊的二叉树"></a>2.两种特殊的二叉树</h5><p>2.1 满二叉树（Full Binary Tree）<br>一棵满二叉树就是高度为k，且拥有(2^k)-1个节点的二叉树，一棵满二叉树每个节点，要么都有两棵子树，要么都没有子树；而且每一层所有的节点之间必须要么都有两棵子树，要么都没子树。<br><img src="https://segmentfault.com/img/bV91FG?w=358&h=246" alt="图片描述"></p>
+<p>2.2 完全二叉树（Complete Binary Tree）<br>完全二叉树是一颗特殊的二叉树，它遵循以下规则：<br>假设完全二叉树高度为k，则完全二叉树需要符合以下两点：<br>1）所有叶子节点都出现在k层或k-1层，并且从1~k-1层必须达到最大节点数。<br>2）第k层可以是不满的，但是第k层的所有节点必须集中在最左边。<br><img src="https://segmentfault.com/img/bV91FS?w=395&h=341" alt="图片描述"></p>
+<h5 id="3-二叉树的实现"><a href="#3-二叉树的实现" class="headerlink" title="3.二叉树的实现"></a>3.二叉树的实现</h5><p>二叉树的实现要比普通树容易，因为其每个节点最多只有两个子节点<br>其实，二叉树的每个左右子节点仍是一颗二叉树，因此，我们可以使用递归的方式来定义二叉树，二叉树的实现代码如下</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BinaryTreeNode</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> data;  <span class="comment">//数据</span></span><br><span class="line">    <span class="keyword">private</span> BinaryTreeNode leftChirld;  <span class="comment">//左孩子</span></span><br><span class="line">    <span class="keyword">private</span> BinaryTreeNode rightChirld; <span class="comment">//右孩子</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getData</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> data;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setData</span><span class="params">(<span class="keyword">int</span> data)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.data = data;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> BinaryTreeNode <span class="title">getLeftChirld</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> leftChirld;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setLeftChirld</span><span class="params">(BinaryTreeNode leftChirld)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.leftChirld = leftChirld;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> BinaryTreeNode <span class="title">getRightChirld</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> rightChirld;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setRightChirld</span><span class="params">(BinaryTreeNode rightChirld)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.rightChirld = rightChirld;</span><br><span class="line">    &#125;        </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种实现方式称之为二叉树的左右链表表示法，如图所示<br><img src="https://segmentfault.com/img/bV91GF?w=1172&h=626" alt="图片描述"><br>到此为止，二叉树的节点已经有了，接下来是对二叉树的操作，比如创建二叉树、添加元素、清空元素、遍历二叉树…<br><strong>3.1 二叉树的创建</strong><br>创建二叉树，一般有两种情况：初始化一个根节点或者初始化一棵空二叉树。代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BinaryTree</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> BinaryTreeNode root;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//初始化二叉树</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BinaryTree</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BinaryTree</span><span class="params">(BinaryTreeNode root)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.root = root;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setRoot</span><span class="params">(BinaryTreeNode root)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.root = root;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> BinaryTreeNode <span class="title">getRoot</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>3.2 二叉树的清空</strong><br>对于二叉树的清空，首先提供一个清空某个节点为根节点的子树的方法，即递归的删除每个节点；接着提供删除一个删除树的方法：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 二叉树的清空：</span></span><br><span class="line"><span class="comment"> * 首先提供一个清空以某个节点为根节点的子树的方法，既递归地删除每个节点；</span></span><br><span class="line"><span class="comment"> * 接着提供一个删除树的方法，直接通过第一种方法删除到根节点即可</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">//清除某个子树的所有节点</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clear</span><span class="params">(BinaryTreeNode node)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(node!=<span class="keyword">null</span>)&#123;</span><br><span class="line">        clear(node.getLeftChirld());</span><br><span class="line">        clear(node.getRightChirld());</span><br><span class="line">        node = <span class="keyword">null</span>; <span class="comment">//删除节点</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//清空树</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span></span>&#123;</span><br><span class="line">    clear(root);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>3.3 判断二叉树是否为空</strong><br>只需判断根节点是否存在即可：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//判断二叉树是否为空</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> root == <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>3.4 求二叉树的高度</strong><br>思路：首先需要一种获取以某个节点为子树的高度方法，使用递归实现。如果一个节点为空，那么这个节点肯定是一颗空树，高度为0；如果不为空，则遍历地比较它的左右子树高度，高的一个为这颗子树的最大高度，然后加上自身的高度即可</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 求二叉树的高度：</span></span><br><span class="line"><span class="comment"> * 首先要一种获取以某个节点为子树的高度的方法，使用递归调用。</span></span><br><span class="line"><span class="comment"> * 如果一个节点为空，那么这个节点肯定是一颗空树，高度为0；</span></span><br><span class="line"><span class="comment"> * 如果不为空，那么我们要遍历地比较它的左子树高度和右子树高度，</span></span><br><span class="line"><span class="comment"> *     高的一个为这个子树的最大高度，然后加上自己本身的高度就是了</span></span><br><span class="line"><span class="comment"> * 获取二叉树的高度，只需要调用第一种方法，即传入根节点</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//获取二叉树的高度</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">heigh</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> heigh(root);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取以某节点为子树的高度</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">heigh</span><span class="params">(BinaryTreeNode node)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(node==<span class="keyword">null</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>; <span class="comment">//递归结束，空子树高度为0</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="comment">//递归获取左子树高度</span></span><br><span class="line">        <span class="keyword">int</span> l = heigh(node.getLeftChirld());</span><br><span class="line">        <span class="comment">//递归获取右子树高度</span></span><br><span class="line">        <span class="keyword">int</span> r = heigh(node.getRightChirld());</span><br><span class="line">        <span class="comment">//高度应该算更高的一边，（+1是因为要算上自身这一层）</span></span><br><span class="line">        <span class="keyword">return</span> l&gt;r? (l+<span class="number">1</span>):(r+<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>3.5 求二叉树的节点数</strong><br>思路：获取二叉树节点数，需要获取以某个节点为根的子树的节点数实现。<br>如果节点为空，则个数肯定为0；如果不为空，则算上这个节点之后，继续递归计算所有子树的节点数，全部相加即可</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 获取二叉树的节点数</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">size</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> size(root);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 求二叉树的节点数：</span></span><br><span class="line"><span class="comment"> * 求节点数时，我们看看获取某个节点为子树的节点数的实现。</span></span><br><span class="line"><span class="comment"> * 首先节点为空，则个数肯定为0；</span></span><br><span class="line"><span class="comment"> * 如果不为空，那就算上这个节点之后继续递归所有左右子树的子节点数，</span></span><br><span class="line"><span class="comment"> *    全部相加就是以所给节点为根的子树的节点数</span></span><br><span class="line"><span class="comment"> * 如果求二叉树的节点数，则输入根节点即可</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">size</span><span class="params">(BinaryTreeNode node)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(node==<span class="keyword">null</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;  <span class="comment">//如果节点为空，则返回节点数为0</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="comment">//计算本节点 所以要+1</span></span><br><span class="line">        <span class="comment">//递归获取左子树节点数和右子树节点数，最终相加</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>+size(node.getLeftChirld())+size(node.getRightChirld());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>3.6 返回某节点的父亲节点</strong><br>思路：首先，同样需要通过一种方法来获取某个节点在某个子树中的父节点，这里使用递归实现，接着通过这种方法获取这个节点在二叉树中的父节点<br>事实上，以现有的这种二叉树的形式，我们并没有办法直接获取一个节点的父节点， 这里只能通过从根节点遍历来比较获取</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//node节点在subTree子树中的父节点</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> BinaryTreeNode <span class="title">getParent</span><span class="params">(BinaryTreeNode subTree,BinaryTreeNode node)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(subTree==<span class="keyword">null</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;   <span class="comment">//如果是空子树，则没有父节点</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(subTree.getLeftChirld()==node || subTree.getRightChirld() == node)&#123;</span><br><span class="line">        <span class="keyword">return</span> subTree;   <span class="comment">//如果子树的根节点的左右孩子之一是待查节点，则返回子树的根节点</span></span><br><span class="line">    &#125;</span><br><span class="line">    BinaryTreeNode parent = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">if</span>(getParent(subTree.getLeftChirld(),node)!=<span class="keyword">null</span>)&#123;</span><br><span class="line">        parent = getParent(subTree.getLeftChirld(),node);</span><br><span class="line">        <span class="keyword">return</span> parent;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="comment">//递归左右子树</span></span><br><span class="line">        <span class="keyword">return</span> getParent(subTree.getRightChirld(),node);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//查找node节点在二叉树中的父节点</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> BinaryTreeNode <span class="title">getParent</span><span class="params">(BinaryTreeNode node)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (root==<span class="keyword">null</span>||root==node)? <span class="keyword">null</span>:getParent(root,node);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>3.7 返回左右子树</strong><br>这个操作很简单，直接用节点的方法来获取即可</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//获取某个节点的左子树</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> BinaryTreeNode <span class="title">getleftTree</span><span class="params">(BinaryTreeNode node)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> node.getLeftChirld();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取某个节点的右子树</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> BinaryTreeNode <span class="title">getrightTree</span><span class="params">(BinaryTreeNode node)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> node.getRightChirld();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>3.8 二叉树的插入</strong><br>二叉树的插入分析：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">* 分两种情况：插入某个节点的左子节点；插入某个节点的右子节点</span><br><span class="line">* 值得指出的是，当这个节点本身有子节点时，这样的插入也会覆盖原来在这个位置上的节点。</span><br><span class="line">* 另外，虽然插入的是子节点，但是子节点也可以代表一颗子树。</span><br><span class="line">* 因为但从这个节点来看并不知道这个节点是否有左右子树存在，所以虽然插入的是一个节点，但有可能</span><br><span class="line">* 插入可很多节点（插入的是一颗子树）</span><br><span class="line">   <span class="comment">//给某个节点插入左节点</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertLeft</span><span class="params">(BinaryTreeNode parent,BinaryTreeNode newnode)</span></span>&#123;</span><br><span class="line">       parent.setLeftChirld(newnode);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">//给某个节点插入右节点</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertRitht</span><span class="params">(BinaryTreeNode parent,BinaryTreeNode newnode)</span></span>&#123;</span><br><span class="line">       parent.setRightChirld(newnode);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="4、二叉树的遍历"><a href="#4、二叉树的遍历" class="headerlink" title="4、二叉树的遍历"></a>4、二叉树的遍历</h5><p>二叉树的遍历是按照一定的规律来顺序遍历各二叉树节点，使得每个节点都会被访问且仅访问一次。通常二叉树的遍历根据根节点的遍历次序分为：先根遍历、中根遍历、后根遍历。<br><strong>4.1 先根遍历(PreOrder)</strong><br>若二叉树为空，则退出，否则进行下面操作</p>
+<ul>
+<li>访问根节点</li>
+<li>先根遍历左子树</li>
+<li>先根遍历右子树</li>
+<li>退出</li>
+</ul>
+<p>按照先根遍历地方式，遍历如下二叉树，则访问顺序为：A、B、D、H、I、E、J、C、F、G<br><img src="https://segmentfault.com/img/bV91FS?w=395&h=341" alt="图片描述"></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PreOrder</span><span class="params">(BinaryTreeNode node)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(node!=<span class="keyword">null</span>)&#123;</span><br><span class="line">        System.out.println(node.getData()); <span class="comment">//先访问根节点</span></span><br><span class="line">        PreOrder(node.getLeftChirld());  <span class="comment">//先根遍历左子树</span></span><br><span class="line">        PreOrder(node.getRightChirld());  <span class="comment">//先根遍历右子树</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>4.2 中根遍历(InOrder)</strong><br>若二叉树为空，则退出，否则进行下面操作</p>
+<ul>
+<li>中根遍历左子树</li>
+<li>访问根节点</li>
+<li>中根遍历右子树</li>
+<li>退出</li>
+</ul>
+<p>按照中根遍历地方式，遍历如下二叉树，则访问顺序为：H、D、I、B、J、E、A、F、C、G<br><img src="https://segmentfault.com/img/bV91FS?w=395&h=341" alt="图片描述"></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">InOrder</span><span class="params">(BinaryTreeNode node)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(node!=<span class="keyword">null</span>)&#123;</span><br><span class="line">        InOrder(node.getLeftChirld());  <span class="comment">//中根遍历左子树</span></span><br><span class="line">        System.out.println(node);    <span class="comment">//访问根节点</span></span><br><span class="line">        InOrder(node.getRightChirld());  <span class="comment">//中根遍历右子树</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>4.3 后根遍历(PostOrder)</strong><br>若二叉树为空，则退出，否则进行下面操作</p>
+<ul>
+<li>后根遍历左子树</li>
+<li>后根遍历右子树</li>
+<li>访问根节点</li>
+<li>退出</li>
+</ul>
+<p>按照后根遍历地方式，遍历如下二叉树，则访问顺序为：H、I、D、J、E、B、F、G、C、A<br><img src="https://segmentfault.com/img/bV91FS?w=395&h=341" alt="图片描述"></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PostOrder</span><span class="params">(BinaryTreeNode node)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            PostOrder(node.getLeftChirld());  <span class="comment">//后根遍历左子树</span></span><br><span class="line">            PostOrder(node.getRightChirld());  <span class="comment">//后根遍历右子树</span></span><br><span class="line">            System.out.println(node);   <span class="comment">//访问根节点</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>转载自：<a href="https://segmentfault.com/a/1190000014743964" target="_blank" rel="noopener">https://segmentfault.com/a/1190000014743964</a></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>clong</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://coldwater.com/2019/09/04/Java二叉树及操作-包括二叉树遍历/">http://coldwater.com/2019/09/04/Java二叉树及操作-包括二叉树遍历/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tag/二叉树/"># 二叉树</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/09/04/Redis/">Redis的相关</a>
+            
+            
+            <a class="next" rel="next" href="/2019/09/04/计算机网络/">计算机网络</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© clong | JGSU | Powered by Hexo </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

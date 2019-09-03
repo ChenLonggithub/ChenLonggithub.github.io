@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="description" content="记录每一瞬间">
+
+
+    <meta name="keywords" content="Java、博客、学习、感悟、程序员">
+
+
+<title>WebService介绍 | 水</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Clong&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Clong&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">WebService介绍</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">clong</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">九月 3, 2018&nbsp;&nbsp;21:49:21</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="WebService的介绍和使用"><a href="#WebService的介绍和使用" class="headerlink" title="WebService的介绍和使用"></a>WebService的介绍和使用</h3><p>概念：Web Service也叫XML Web Service WebService是一种可以接收从Internet或者Intranet上的其它系统中传递过来的请求，轻量级的独立的通讯技术。是:通过SOAP在Web上提供的软件服务，使用WSDL文件进行说明，并通过UDDI进行注册。分为SOAP和restfull风格</p>
+<p><strong>XML</strong>：<strong>(Extensible Markup Language)</strong>扩展型可标记语言。面向短期的临时数据处理、面向万维网络，是Soap的基础。</p>
+<p><strong>Soap</strong>：<strong>(Simple Object Access Protocol)</strong>简单对象存取协议。是XML Web Service 的通信协议。当用户通过UDDI找到你的WSDL描述文档后，他通过可以SOAP调用你建立的Web服务中的一个或多个操作。SOAP是XML文档形式的调用方法的规范，它可以支持不同的底层接口，像HTTP(S)或者SMTP。</p>
+<p><strong>WSDL</strong>：<strong>(Web Services Description Language)</strong> WSDL 文件是一个 XML 文档，用于说明一组 SOAP 消息以及如何交换这些消息。大多数情况下由软件自动生成和使用。</p>
+<p><strong>UDDI (Universal Description, Discovery, and Integration)</strong> 是一个主要针对Web服务供应商和使用者的新项目。在用户能够调用Web服务之前，必须确定这个服务内包含哪些商务方法，找到被调用的接口定义，还要在服务端来编制软件，UDDI是一种根据描述文档来引导系统查找相应服务的机制。UDDI利用SOAP消息机制（标准的XML/HTTP）来发布，编辑，浏览以及查找注册信息。它采用XML格式来封装各种不同类型的数据，并且发送到注册中心或者由注册中心来返回需要的数据。</p>
+<h3 id="调用原理"><a href="#调用原理" class="headerlink" title="调用原理"></a>调用原理</h3><p><img src="http://img.cloong.top/webservice.png" alt></p>
+<p>实现一个完整的Web服务包括以下步骤：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">◆ Web服务提供者设计实现Web服务，并将调试正确后的Web服务通过Web服务中介者发布，并在UDDI注册中心注册； （发布）</span><br><span class="line"></span><br><span class="line">◆ Web服务请求者向Web服务中介者请求特定的服务，中介者根据请求查询UDDI注册中心，为请求者寻找满足请求的服务； （发现）</span><br><span class="line"></span><br><span class="line">◆ Web服务中介者向Web服务请求者返回满足条件的Web服务描述信息，该描述信息用WSDL写成，各种支持Web服务的机器都能阅读；（发现）</span><br><span class="line"></span><br><span class="line">◆ 利用从Web服务中介者返回的描述信息生成相应的SOAP消息，发送给Web服务提供者，以实现Web服务的调用；（绑定）</span><br><span class="line"></span><br><span class="line">◆ Web服务提供者按SOAP消息执行相应的Web服务，并将服务结果返回给Web服务请求者。（绑定）</span><br></pre></td></tr></table></figure>
+
+<h3 id="SOAT风格"><a href="#SOAT风格" class="headerlink" title="SOAT风格"></a>SOAT风格</h3><h4 id="Helloword"><a href="#Helloword" class="headerlink" title="Helloword"></a>Helloword</h4><p>首先下载apache-cxf-3.3.1，里面有jar包</p>
+<p>新建一个java web工程，将apache-cxf-3.3.1的lib包的jar拷贝到lib文件夹下</p>
+<p>新建一个HelloWord.java的接口和实现它 的HelloWordImpl.java,在接口上注解@WebService</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@WebService</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">HelloWord</span> </span>&#123;</span><br><span class="line">     <span class="function"><span class="keyword">public</span> String <span class="title">sayHello</span><span class="params">(String name)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWordImpl</span> <span class="keyword">implements</span> <span class="title">HelloWord</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">sayHello</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"name="</span>+name+<span class="string">"------------age=21"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>新建一个MainService.java 来发布服务,运行服务，会发现它不会停止，一直在运行</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainService</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        JaxWsServerFactoryBean jaxWsServerFactoryBean = <span class="keyword">new</span> JaxWsServerFactoryBean();</span><br><span class="line">        <span class="comment">//发布的地址和服务名</span></span><br><span class="line">        jaxWsServerFactoryBean.setAddress(<span class="string">"http://192.168.43.53:8888/helloword"</span>);</span><br><span class="line">        jaxWsServerFactoryBean.setServiceClass(HelloWordImpl.class);</span><br><span class="line">        Server server = jaxWsServerFactoryBean.create();</span><br><span class="line">        server.start();</span><br><span class="line">        System.out.println(<span class="string">"======开始服务---------&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>打开游览器输入：<a href="http://192.168.43.53:8888/helloword?wsdl" target="_blank" rel="noopener">http://192.168.43.53:8888/helloword?wsdl</a>可以看到如下，说明服务启动正确</p>
+<p><img src="http://img.cloong.top/webservice02.png" alt></p>
+<p>新建一个Client,来调用服务，运行程序，输出</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">/*代理*/</span></span><br><span class="line">        JaxWsProxyFactoryBean jaxWsProxyFactoryBean = <span class="keyword">new</span> JaxWsProxyFactoryBean();</span><br><span class="line">        <span class="comment">/*地址*/</span></span><br><span class="line">        jaxWsProxyFactoryBean.setAddress(<span class="string">"http://192.168.43.53:8888/helloword"</span>);</span><br><span class="line">        <span class="comment">/*传入接口*/</span></span><br><span class="line">        jaxWsProxyFactoryBean.setServiceClass(HelloWord.class);</span><br><span class="line">        HelloWord helloword = (HelloWord) jaxWsProxyFactoryBean.create();</span><br><span class="line">        String str = helloword.sayHello(<span class="string">"chenlong"</span>);</span><br><span class="line">        System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一个简单的HelloWord就写好了。这是我们自己手动写代码来调用的，如果不写代理类，怎么实现呢？借助JAX-WS工具。</p>
+<p>首先到apache-cxf-3.3.1\bin这个目录下，打开cmd,输入wsdl2java &lt;<a href="http://192.168.43.53:8888/helloword?wsdl" target="_blank" rel="noopener">http://192.168.43.53:8888/helloword?wsdl</a> 然后会发现，该目录下回生成一些代码，将这些类直接复制到项目的一个包中（或者达成jar包放在lib下也可以），新建client2.java</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        HelloWord helloWord  = <span class="keyword">new</span> HelloWordImpl();</span><br><span class="line">        String chen = helloWord.sayHello(<span class="string">"chen"</span>);</span><br><span class="line">        System.out.println(chen);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>直接这样就可以了。</p>
+<h3 id="Restful-Web-Services-JAX-RS"><a href="#Restful-Web-Services-JAX-RS" class="headerlink" title="Restful Web Services (JAX-RS)"></a><strong>Restful Web Services (JAX-RS)</strong></h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">•JAX-RS= Java API For Restful Web Services</span><br><span class="line"></span><br><span class="line">• JAX-RS是JAVA EE6 引入的一个新规范。 是一个Java 编程语言的应用程序接口，支持按照表述性状态转移 （REST）架构风格创建Web服务。</span><br><span class="line"></span><br><span class="line">• JAX-RS使用了Java标注来简化Web服务的客户端和服务端的开发和部署。</span><br><span class="line"></span><br><span class="line">• 除了JAX-RS方式发布Restful风格的Webservice，SpringMVC也可以发布Restful风格的Webservice</span><br></pre></td></tr></table></figure>
+
+<h5 id="JAX-RS提供了一些标注将一个资源类，一个POJO-Java类，封装为Web资源。包括："><a href="#JAX-RS提供了一些标注将一个资源类，一个POJO-Java类，封装为Web资源。包括：" class="headerlink" title="JAX-RS提供了一些标注将一个资源类，一个POJO Java类，封装为Web资源。包括："></a><strong>JAX-RS</strong>提供了一些标注将一个资源类，一个POJO Java类，封装为Web资源。包括：</h5><figure class="highlight html"><table><tr><td class="code"><pre><span class="line">@Path，标注资源类或者方法的相对路径 @GET，@PUT，@POST，@DELETE，标注方法是HTTP请求的类型。</span><br><span class="line"></span><br><span class="line">@Produces，标注返回的MIME媒体类型 @Consumes，标注可接受请求的MIME媒体类型</span><br><span class="line"></span><br><span class="line">@PathParam，@QueryParam，@HeaderParam，@CookieParam，@MatrixParam，@FormParam,分别标注方法的参数来自于HTTP请求的不同位置，例如：</span><br><span class="line"></span><br><span class="line">@PathParam来自于URL的路径，@QueryParam来自于URL的查询参数，</span><br><span class="line"></span><br><span class="line">@HeaderParam来自于HTTP请求的头信息，@CookieParam来自于HTTP请求的Cookie。</span><br></pre></td></tr></table></figure>
+
+<p>基于JAX-RS实现的框架有Jersey，RESTEasy等，这两个框架创建的应用可以很方便地部署到Servlet 容器中</p>
+<h5 id="简单实例："><a href="#简单实例：" class="headerlink" title="简单实例："></a>简单实例：</h5><p>创建一个web工程，添加jar包，要实现的服务是根据ID查用户，添加一个用户的功能</p>
+<p>首先创建Customer.java</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@XmlRootElement</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Customer</span> </span>&#123;</span><br><span class="line">    <span class="meta">@FormParam</span>(<span class="string">"id"</span>)</span><br><span class="line">    <span class="keyword">private</span> String id;</span><br><span class="line">    <span class="meta">@FormParam</span>(<span class="string">"name"</span>)</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="meta">@FormParam</span>(<span class="string">"age"</span>)</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Customer</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Customer</span><span class="params">(String id, String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.id = id;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>@XmlRootElement,可以将customer转为xml</p>
+<p>创建一个CustomerService 接口</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@WebService</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">CustomerService</span> </span>&#123;</span><br><span class="line">    <span class="function">Customer <span class="title">getCustomerById</span><span class="params">(String id)</span></span>;</span><br><span class="line">    <span class="function">String <span class="title">addCustomer</span><span class="params">(Customer customer)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>实现接口,一个get方法，一个post方法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Path</span>(<span class="string">"/crm"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomerServiceImpl</span> <span class="keyword">implements</span> <span class="title">CustomerService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="meta">@GET</span></span><br><span class="line">    <span class="meta">@Path</span>(<span class="string">"/customer/&#123;id&#125;"</span>)</span><br><span class="line">    <span class="meta">@Produces</span>(<span class="string">"application/json"</span>)<span class="comment">//以什么样的方式返回数据xml,json标注返回的MIME媒体类型</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Customer <span class="title">getCustomerById</span><span class="params">(@PathParam(<span class="string">"id"</span>)</span> String id) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(id.equals(<span class="string">"1"</span>))&#123;</span><br><span class="line">            <span class="keyword">return</span>  <span class="keyword">new</span> Customer(<span class="string">"1"</span>,<span class="string">"zhangsan"</span>,<span class="number">12</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(id.equals(<span class="string">"2"</span>))&#123;</span><br><span class="line">            <span class="keyword">return</span>  <span class="keyword">new</span> Customer(<span class="string">"2"</span>,<span class="string">"lisi"</span>,<span class="number">13</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Customer(<span class="string">"3"</span>,<span class="string">"chenlong"</span>,<span class="number">11</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="meta">@POST</span></span><br><span class="line">    <span class="meta">@Path</span>(<span class="string">"/customer"</span>)</span><br><span class="line">    <span class="meta">@Consumes</span>(<span class="string">"application/x-www-form-urlencoded"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">addCustomer</span><span class="params">(@BeanParam Customer customer)</span> </span>&#123;</span><br><span class="line">        System.out.println(customer);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"success:"</span>+customer.toString();</span><br><span class="line">    &#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>手动发布服务</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        JAXRSServerFactoryBean jaxrsServerFactoryBean = <span class="keyword">new</span> JAXRSServerFactoryBean();</span><br><span class="line">        <span class="comment">//customer为自己写的服务名，客户端用这个地址加方法就可以用了</span></span><br><span class="line">        jaxrsServerFactoryBean.setAddress(<span class="string">"http://localhost:8888/customer"</span>);</span><br><span class="line">        jaxrsServerFactoryBean.setResourceClasses(CustomerServiceImpl.class);</span><br><span class="line">        jaxrsServerFactoryBean.create().start();</span><br><span class="line">        System.out.println(<span class="string">"开始服务-------&gt;&gt;&gt;&gt;&gt;&gt;&gt;"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>服务启动之后，在游览器输入：<a href="http://localhost:8888/customer/crm/customer/3%EF%BC%8C%E5%8F%AF%E4%BB%A5%E7%9C%8B%E5%88%B0json%E6%95%B0%E6%8D%AE" target="_blank" rel="noopener">http://localhost:8888/customer/crm/customer/3，可以看到json数据</a></p>
+<p>使用客户端调用，get调用</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="comment">//1. 创建 HttpClient 的实例</span></span><br><span class="line">        CloseableHttpClient httpclient = HttpClientBuilder.create().build();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//2. 创建某种连接方法的实例</span></span><br><span class="line">        HttpGet httpget = <span class="keyword">new</span> HttpGet(<span class="string">"http://localhost:8888/customer/crm/customer/3"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//3. 调用第一步中创建好的实例的execute方法来执行第二步中创建好的链接类实例</span></span><br><span class="line">        HttpResponse response = httpclient.execute(httpget);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//4. 读response获取HttpEntity</span></span><br><span class="line">        HttpEntity entity = response.getEntity();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//5. 对得到后的内容进行处理</span></span><br><span class="line">        <span class="keyword">if</span> (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) &#123;</span><br><span class="line">            String result = EntityUtils.toString(entity, <span class="string">"UTF-8"</span>);</span><br><span class="line">            System.out.println(result);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            String result = EntityUtils.toString(entity, <span class="string">"UTF-8"</span>);</span><br><span class="line">            System.err.println(result);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//6. 释放连接。无论执行方法是否成功，都必须释放连接</span></span><br><span class="line">        EntityUtils.consume(entity);</span><br><span class="line">        httpclient.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用客户端post请求</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PostClient</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">/*创建HTTPclient的实例*/</span></span><br><span class="line">        CloseableHttpClient closeableHttpClient = HttpClientBuilder.create().build();</span><br><span class="line">        <span class="comment">/*创建链接的方式*/</span></span><br><span class="line">        HttpPost httpPost = <span class="keyword">new</span> HttpPost(<span class="string">"http://localhost:8888/customer/crm/customer"</span>);</span><br><span class="line">        <span class="comment">/*传递参数*/</span></span><br><span class="line">        List&lt;BasicNameValuePair&gt; list= <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        list.add(<span class="keyword">new</span> BasicNameValuePair(<span class="string">"id"</span>,<span class="string">"4"</span>));</span><br><span class="line">        list.add(<span class="keyword">new</span> BasicNameValuePair(<span class="string">"name"</span>,<span class="string">"陈龙"</span>));</span><br><span class="line">        list.add(<span class="keyword">new</span> BasicNameValuePair(<span class="string">"age"</span>,<span class="string">"18"</span>));</span><br><span class="line">        HttpEntity httpEntity = <span class="keyword">new</span> UrlEncodedFormEntity(list,<span class="string">"utf-8"</span>);</span><br><span class="line">        httpPost.setEntity(httpEntity);</span><br><span class="line">        <span class="comment">/*调用*/</span></span><br><span class="line">        HttpResponse execute = closeableHttpClient.execute(httpPost);</span><br><span class="line">        <span class="comment">// 读response获取HttpEntity</span></span><br><span class="line">        HttpEntity entity = execute.getEntity();</span><br><span class="line">        <span class="keyword">if</span>(execute.getStatusLine().getStatusCode() == HttpStatus.SC_OK)&#123;</span><br><span class="line">            String s = EntityUtils.toString(entity, <span class="string">"Utf-8"</span>);</span><br><span class="line">            System.out.println(s);</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            String s = EntityUtils.toString(entity, <span class="string">"Utf-8"</span>);</span><br><span class="line">            System.out.println(s);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//6. 释放连接。无论执行方法是否成功，都必须释放连接</span></span><br><span class="line">        EntityUtils.consume(entity);</span><br><span class="line">        closeableHttpClient.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行，可在</p>
+<p>客户端控制台下输出：success:Customer{id=’4’, name=’陈龙’, age=18}</p>
+<p>在服务器控制台输出：Customer{id=’4’, name=’陈龙’, age=18}</p>
+<h4 id="spring-cxf-的整合"><a href="#spring-cxf-的整合" class="headerlink" title="spring + cxf 的整合"></a>spring + cxf 的整合</h4><p>工程的结构</p>
+<p><img src="http://img.cloong.top/webservice03.png" alt></p>
+<p>创建一个web maven工程，在web.xml加入代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">&lt;context-param&gt;</span><br><span class="line">  &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;</span><br><span class="line">  &lt;param-value&gt;classpath:springcxf.xml&lt;/param-value&gt;</span><br><span class="line">&lt;/context-param&gt;</span><br><span class="line">&lt;listener&gt;</span><br><span class="line">  &lt;listener-<span class="class"><span class="keyword">class</span>&gt;<span class="title">org</span>.<span class="title">springframework</span>.<span class="title">web</span>.<span class="title">context</span>.<span class="title">ContextLoaderListener</span>&lt;/<span class="title">listener</span>-<span class="title">class</span>&gt;</span></span><br><span class="line"><span class="class">&lt;/<span class="title">listener</span>&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">&lt;!-- <span class="title">CXF</span>的<span class="title">Servlet</span> --&gt;</span></span><br><span class="line"><span class="class">&lt;<span class="title">servlet</span>&gt;</span></span><br><span class="line"><span class="class">  &lt;<span class="title">servlet</span>-<span class="title">name</span>&gt;<span class="title">cxf</span>&lt;/<span class="title">servlet</span>-<span class="title">name</span>&gt;</span></span><br><span class="line"><span class="class">  &lt;<span class="title">servlet</span>-<span class="title">class</span>&gt;<span class="title">org</span>.<span class="title">apache</span>.<span class="title">cxf</span>.<span class="title">transport</span>.<span class="title">servlet</span>.<span class="title">CXFServlet</span>&lt;/<span class="title">servlet</span>-<span class="title">class</span>&gt;</span></span><br><span class="line"><span class="class">  &lt;<span class="title">load</span>-<span class="title">on</span>-<span class="title">startup</span>&gt;1&lt;/<span class="title">load</span>-<span class="title">on</span>-<span class="title">startup</span>&gt;</span></span><br><span class="line"><span class="class">&lt;/<span class="title">servlet</span>&gt;</span></span><br><span class="line"><span class="class">&lt;!-- 本系统的<span class="title">WebService</span>路径必须以/<span class="title">ws</span>/开头 --&gt;</span></span><br><span class="line"><span class="class">&lt;<span class="title">servlet</span>-<span class="title">mapping</span>&gt;</span></span><br><span class="line"><span class="class">  &lt;<span class="title">servlet</span>-<span class="title">name</span>&gt;<span class="title">cxf</span>&lt;/<span class="title">servlet</span>-<span class="title">name</span>&gt;</span></span><br><span class="line"><span class="class">  &lt;<span class="title">url</span>-<span class="title">pattern</span>&gt;/<span class="title">ws</span>/*&lt;/<span class="title">url</span>-<span class="title">pattern</span>&gt;</span></span><br><span class="line"><span class="class">&lt;/<span class="title">servlet</span>-<span class="title">mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>将上述的Customer，和CustomerService以及实现类加入工程，以及helloword的服务加进来，在resource目录下新建application.xml</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span>?&gt;</span><br><span class="line">&lt;beans xmlns=<span class="string">"http://www.springframework.org/schema/beans"</span></span><br><span class="line">       xmlns:xsi=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">       xmlns:jaxws=<span class="string">"http://cxf.apache.org/jaxws"</span></span><br><span class="line">       xmlns:jaxrs=<span class="string">"http://cxf.apache.org/jaxrs"</span></span><br><span class="line">       xsi:schemaLocation=<span class="string">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd</span></span><br><span class="line"><span class="string">		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd</span></span><br><span class="line"><span class="string">		http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd"</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;jaxws:endpoint id="helloword" implementor="ws.HelloWordImpl" address="/helloword"&gt;&lt;/jaxws:endpoint&gt;</span><br><span class="line"></span><br><span class="line">    &lt;jaxrs:server id=<span class="string">"customer"</span> address=<span class="string">"/customerService"</span>&gt;</span><br><span class="line">        &lt;jaxrs:serviceBeans&gt;</span><br><span class="line">            &lt;bean id="customerService" class="clong.service.impl.CustomerServiceImpl"&gt;&lt;/bean&gt;</span><br><span class="line">        &lt;/jaxrs:serviceBeans&gt;</span><br><span class="line">    &lt;/jaxrs:server&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+
+<p>启动Tomcat，在服务器访问<a href="http://localhost:8080/ws/" target="_blank" rel="noopener">http://localhost:8080/ws/</a>，可以看到你发布的服务</p>
+<p><img src="http://img.cloong.top/webservice04.png" alt></p>
+<p>这时候用代码调用只需要改：HttpGet httpget = new HttpGet(“<a href="http://localhost:8080/ws/customerService/crm/customer/3%22" target="_blank" rel="noopener">http://localhost:8080/ws/customerService/crm/customer/3”);就可以了，我这里不知道为什么掉用这个方法，获取不到json，显示</a>)</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">No message body writer has been found for class clong.bean.Customer, ContentType: application/json</span><br></pre></td></tr></table></figure>
+
+<p>而将这个方法的 @Produces(“application/json”)改为 @Produces(“application/xml”),就可以显示xml数据，不知道哪里有问题，待完善</p>
+<p>Post 请求一样的，将HttpPost httpPost = new HttpPost(“<a href="http://localhost:8080/ws/customerService/crm/customer%22" target="_blank" rel="noopener">http://localhost:8080/ws/customerService/crm/customer”);修改就可以了。</a>;%E4%BF%AE%E6%94%B9%E5%B0%B1%E5%8F%AF%E4%BB%A5%E4%BA%86%E3%80%82)</p>
+<p>大概的webservice就到这里了。以后有新需求，在添加！</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>clong</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://coldwater.com/2018/09/04/WebService介绍/">http://coldwater.com/2018/09/04/WebService介绍/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tag/webservice/"># webservice</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/02/04/Java-Thread-的相关知识/">Java Thread 的相关知识</a>
+            
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© clong | JGSU | Powered by Hexo </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

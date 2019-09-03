@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="description" content="记录每一瞬间">
+
+
+    <meta name="keywords" content="Java、博客、学习、感悟、程序员">
+
+
+<title>操作系统 | 水</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Clong&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Clong&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">操作系统</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">clong</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">六月 3, 2019&nbsp;&nbsp;22:03:08</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/category/OS/">OS</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="一、进程与线程"><a href="#一、进程与线程" class="headerlink" title="一、进程与线程"></a>一、进程与线程</h3><h4 id="1-1-区别与联系"><a href="#1-1-区别与联系" class="headerlink" title="1.1 区别与联系"></a>1.1 区别与联系</h4><p><strong>进程：</strong></p>
+<p>​    进程（Process）是计算机中的程序关于某数据集合上的一次运行活动，是系统进行资源分配和调度的基本单位，是操作系统结构的基础。在早期面向进程设计的计算机结构中，进程是程序的基本执行实体；在当代面向线程设计的计算机结构中，进程是线程的容器。程序是指令、数据及其组织形式的描述，进程是程序的实体。</p>
+<p>​    进程的概念主要有两点：第一，进程是一个实体。每一个进程都有它自己的地址空间，一般情况下，包括<a href="https://baike.baidu.com/item/%E6%96%87%E6%9C%AC" target="_blank" rel="noopener">文本</a>区域（text region）、数据区域（data region）和<a href="https://baike.baidu.com/item/%E5%A0%86%E6%A0%88" target="_blank" rel="noopener">堆栈</a>（stack region）。文本区域存储处理器执行的代码；数据区域存储变量和进程执行期间使用的动态分配的内存；堆栈区域存储着活动过程调用的指令和本地变量。第二，进程是一个“执行中的程序”。</p>
+<p>​    进程由程序、数据和<a href="https://baike.baidu.com/item/%E8%BF%9B%E7%A8%8B%E6%8E%A7%E5%88%B6%E5%9D%97" target="_blank" rel="noopener">进程控制块</a>三部分组成。</p>
+<p><strong>线程：</strong></p>
+<p>​    <strong>线程</strong>（英语：thread）是<a href="https://baike.baidu.com/item/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F" target="_blank" rel="noopener">操作系统</a>能够进行运算<a href="https://baike.baidu.com/item/%E8%B0%83%E5%BA%A6" target="_blank" rel="noopener">调度</a>的最小单位。它被包含在<a href="https://baike.baidu.com/item/%E8%BF%9B%E7%A8%8B" target="_blank" rel="noopener">进程</a>之中，是<a href="https://baike.baidu.com/item/%E8%BF%9B%E7%A8%8B" target="_blank" rel="noopener">进程</a>中的实际运作单位。一条线程指的是<a href="https://baike.baidu.com/item/%E8%BF%9B%E7%A8%8B" target="_blank" rel="noopener">进程</a>中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。在Unix System V及<a href="https://baike.baidu.com/item/SunOS" target="_blank" rel="noopener">SunOS</a>中也被称为轻量进程（lightweight processes），但轻量进程更多指内核线程（kernel thread），而把用户线程（user thread）称为线程。</p>
+<p>​    线程是独立调度和分派的基本单位，同一进程中的多条线程将共享该进程中的全部系统资源，如虚拟地址空间，<a href="https://baike.baidu.com/item/%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6" target="_blank" rel="noopener">文件描述符</a>和<a href="https://baike.baidu.com/item/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86" target="_blank" rel="noopener">信号处理</a>等等。但同一进程中的多个线程有各自的<a href="https://baike.baidu.com/item/%E8%B0%83%E7%94%A8%E6%A0%88" target="_blank" rel="noopener">调用栈</a>（call stack），自己的寄存器环境（register context），自己的线程本地存储（thread-local storage）。</p>
+<p><strong>区别：</strong></p>
+<ol>
+<li>根本区别：进程是操作系统资源分配的基本单位，而线程是任务调度和执行的基本单位，进程是资源分配最小单位，线程是程序执行的最小单位；</li>
+<li>进程有自己独立的地址空间，每启动一个进程，系统都会为其分配地址空间，建立数据表来维护代码段、堆栈段和数据段，线程没有独立的地址空间，它使用相同的地址空间共享数据；</li>
+<li>CPU切换一个线程比切换进程花费小；</li>
+<li>创建一个线程比进程开销小；</li>
+<li>线程占用的资源要⽐进程少很多。</li>
+<li>线程之间通信更方便，同一个进程下，线程共享全局变量，静态变量等数据，进程之间的通信需要以通信的方式（IPC）进行；（但多线程程序处理好同步与互斥是个难点）</li>
+<li>线程的消亡不会影响到进程</li>
+<li>进程对资源保护要求高，开销大，效率相对较低，线程资源保护要求不高，但开销小，效率高，可频繁切换；</li>
+</ol>
+<p>也可参考：<a href="https://blog.csdn.net/a3192048/article/details/82085422" target="_blank" rel="noopener">https://blog.csdn.net/a3192048/article/details/82085422</a></p>
+<p><strong>从三个角度来剖析二者之间的区别:</strong><br>1、调度：线程作为调度和分配的基本单位，进程作为拥有资源的基本单位。<br>2、并发性：不仅进程之间可以并发执行，同一个进程的多个线程之间也可以并发执行。<br>3、拥有资源：进程是拥有资源的一个独立单位，线程不拥有系统资源，但可以访问隶属于进程的资源</p>
+<p><strong>进程和线程之间的关系？</strong></p>
+<p>1、一个线程只能属于一个进程，而一个进程可以有多个线程，但至少有一个线程（通常说的主线程）。<br>2、资源分配给进程，同一进程的所有线程共享该进程的所有资源。<br>3、线程在执行过程中，需要协作同步。不同进程的线程间要利用消息通信的办法实现同步。<br>4、处理机分给线程，即真正在处理机上运行的是线程。<br>5、线程是指进程内的一个执行单元，也是进程内的可调度实体。</p>
+<h4 id="1-2-线程调度"><a href="#1-2-线程调度" class="headerlink" title="1.2 线程调度"></a>1.2 线程调度</h4><p>​    计算机通常只有一个cpu,在任意时刻只能执行一条机器指令,每个线程只有获得cpu的使用权才能执行指令.所谓多线程的并发运行,其实是从宏观上看,各个线程轮流获取cpu的使用权,分别执行各自的任务.在运行池中,会有多个处于就绪状态的线程在等待cpu, JAVA虚拟机的一项任务就是负责线程的调度.线程调度是指按照特定机制为多个线程分配CPU的使用.</p>
+<p><strong>调度方式</strong></p>
+<ol>
+<li>分时调度模式: 是指让所有的线程轮流获得cpu的使用权,并且平均分配每个线程占用的cpu的时间片.</li>
+<li>抢占式调度模式: JAVA虚拟机采用抢占式调度模式,是指优先让可运行池中优先级高的线程占用CPU,如果可运行池中的线程优先级相同,那就随机选择一个线程,使其占用CPU.处于运行状态的线程会一直运行,直至它不得不放弃CPU.</li>
+</ol>
+<h4 id="1-3-线程切换步骤"><a href="#1-3-线程切换步骤" class="headerlink" title="1.3 线程切换步骤"></a>1.3 线程切换步骤</h4><p><img src="http://img.cloong.top/nio1" alt></p>
+<p><img src="http://img.cloong.top/io2" alt></p>
+<h4 id="1-4-Linux下的IPC（进程通信）"><a href="#1-4-Linux下的IPC（进程通信）" class="headerlink" title="1.4 Linux下的IPC（进程通信）"></a>1.4 Linux下的IPC（进程通信）</h4><ul>
+<li><strong>管道/匿名管道(Pipes)</strong> ：用于具有亲缘关系的父子进程间或者兄弟进程之间的通信。</li>
+<li><strong>有名管道(Names Pipes)</strong> : 匿名管道由于没有名字，只能用于亲缘关系的进程间通信。为了克服这个缺点，提出了有名管道。有名管道严格遵循<strong>先进先出(first in first out)</strong>。有名管道以磁盘文件的方式存在，可以实现本机任意两个进程通信。</li>
+<li><strong>信号(Signal)</strong> ：信号是一种比较复杂的通信方式，用于通知接收进程某个事件已经发生；</li>
+<li><strong>消息队列(Message Queuing)</strong> ：消息队列是消息的链表,具有特定的格式,存放在内存中并由消息队列标识符标识。管道和消息队列的通信数据都是先进先出的原则。与管道（无名管道：只存在于内存中的文件；命名管道：存在于实际的磁盘介质或者文件系统）不同的是消息队列存放在内核中，只有在内核重启(即，操作系统重启)或者显示地删除一个消息队列时，该消息队列才会被真正的删除。消息队列可以实现消息的随机查询,消息不一定要以先进先出的次序读取,也可以按消息的类型读取.比FIFO更有优势。<strong>消息队列克服了信号承载信息量少，管道只能承载无格式字 节流以及缓冲区大小受限等缺。</strong></li>
+<li><strong>信号量(Semaphores)</strong> ：信号量是一个计数器，用于多进程对共享数据的访问，信号量的意图在于进程间同步。这种通信方式主要用于解决与同步相关的问题并避免竞争条件。</li>
+<li><strong>共享内存(Shared memory)</strong> ：使得多个进程可以访问同一块内存空间，不同进程可以及时看到对方进程中对共享内存中数据得更新。这种方式需要依靠某种同步操作，如互斥锁和信号量等。可以说这是最有用的进程间通信方式。</li>
+<li><strong>套接字(Sockets)</strong> : 此方法主要用于在客户端和服务器之间通过网络进行通信。套接字是支持TCP/IP的网络通信的基本操作单元，可以看做是不同主机之间的进程进行双向通信的端点，简单的说就是通信的两方的一种约定，用套接字中的相关函数来完成通信过程。</li>
+</ul>
+<h4 id="1-5-协程"><a href="#1-5-协程" class="headerlink" title="1.5 协程"></a>1.5 协程</h4><p>​    协程不是进程，也不是线程，它就是一个函数，一个特殊的函数——可以在某个地方挂起，并且可以重新在挂起处继续运行。所以说，协程与进程、线程相比，不是一个维度的概念。<br>​    一个进程可以包含多个线程，一个线程也可以包含多个协程，也就是说，一个线程内可以有多个那样的特殊函数在运行。但是有一点，必须明确，一个线程内的多个协程的运行是串行的。如果有多核CPU的话，多个进程或一个进程内的多个线程是可以并行运行的，但是一个线程内的多个协程却绝对串行的，无论有多少个CPU（核）。这个比较好理解，毕竟协程虽然是一个特殊的函数，但仍然是一个函数。一个线程内可以运行多个函数，但是这些函数都是串行运行的。当一个协程运行时，其他协程必须挂起。</p>
+<p><strong>一 协程与进程、线程的比较</strong></p>
+<ol>
+<li><p>​    虽然说，协程与进程、线程相比不是一个维度的概念，但是有时候，我们仍然需要将它们做一番比较，具体如下：</p>
+</li>
+<li><p>协程既不是进程，也不是线程，协程仅仅是一个特殊的函数，协程跟他们就不是一个维度。</p>
+</li>
+<li><p>一个进程可以包含多个线程，一个线程可以包含多个协程。一个线程内的多个协程虽然可以切换，但是这多个协程是串行执行的，只能在这一个线程内运行，没法利用CPU多核能力。</p>
+</li>
+<li><p>协程与进程一样，它们的切换都存在上下文切换问题。</p>
+<p>表面上，进程、线程、协程都存在上下文切换的问题，但是三者上下文切换又有明显不同，见下表：</p>
+</li>
+</ol>
+<p><img src="http://img.cloong.top/%E5%8D%8F%E7%A8%8B" alt></p>
+<p>一句话说明什么是线程：<strong>协程是一种用户态的轻量级线程</strong>。</p>
+<p>一句话并不能完全概括协程的全部，但是起码能让我们对协程这个概念有一个基本的印象。从硬件发展来看，从最初的单核单CPU，到单核多CPU，多核多CPU，似乎已经到了极限了，但是单核CPU性能却还在不断提升。server端也在不断的发展变化。如果将程序分为IO密集型应用和CPU密集型应用，二者的server的发展如下：<br>                <strong>IO密集型应用: 多进程-&gt;多线程-&gt;事件驱动-&gt;协程</strong><br>                    <strong>CPU密集型应用:  多进程–&gt;多线程</strong> </p>
+<p>如果说多进程对于多CPU，多线程对应多核CPU，那么事件驱动和协程则是在充分挖掘不断提高性能的单核CPU的潜力。</p>
+<p>以下的讨论如无特别说明，不考虑cpu密集型应用。</p>
+<h5 id="异步-vs-同步"><a href="#异步-vs-同步" class="headerlink" title="异步 vs 同步"></a>异步 vs 同步</h5><p>​    无论是线程还是进程，使用的都是同步进制，当发生阻塞时，性能会大幅度降低，无法充分利用CPU潜力，浪费硬件投资，更重要造成软件模块的铁板化，紧耦合，无法切割，不利于日后扩展和变化。不管是进程还是线程，每次阻塞、切换都需要陷入系统调用(system call)，先让CPU跑操作系统的调度程序，然后再由调度程序决定该跑哪一个进程(线程)。多个线程之间在一些访问互斥的代码时还需要加上锁，这也是导致多线程编程难的原因之一。</p>
+<p>​    现下流行的异步server都是基于事件驱动的（如nginx）。事件驱动简化了编程模型，很好地解决了多线程难于编程，难于调试的问题。异步事件驱动模型中，把会导致阻塞的操作转化为一个异步操作，主线程负责发起这个异步操作，并处理这个异步操作的结果。由于所有阻塞的操作都转化为异步操作，理论上主线程的大部分时间都是在处理实际的计算任务，少了多线程的调度时间，所以这种模型的性能通常会比较好。</p>
+<p>​    总的说来，当单核cpu性能提升，cpu不在成为性能瓶颈时，采用异步server能够简化编程模型，也能提高IO密集型应用的性能。</p>
+<h5 id="协程-vs-线程"><a href="#协程-vs-线程" class="headerlink" title="协程 vs 线程"></a>协程 vs 线程</h5><p>​    之前说道，协程是一种用户级的轻量级线程。协程拥有自己的寄存器上下文和栈。协程调度切换时，将寄存器上下文和栈保存到其他地方，在切回来的时候，恢复先前保存的寄存器上下文和栈。因此：</p>
+<p>​    协程能保留上一次调用时的状态（即所有局部状态的一个特定组合），每次过程重入时，就相当于进入上一次调用的状态，换种说法：进入上一次离开时所处逻辑流的位置。</p>
+<p>​    在并发编程中，协程与线程类似，每个协程表示一个执行单元，有自己的本地数据，与其它协程共享全局数据和其它资源。目前主流语言基本上都选择了多线程作为并发设施，与线程相关的概念是抢占式多任务（Preemptive multitasking），而与协程相关的是<strong>协作式多任务</strong>。</p>
+<p>​    不管是进程还是线程，每次阻塞、切换都需要陷入系统调用(system call)，先让CPU跑操作系统的调度程序，然后再由调度程序决定该跑哪一个进程(线程)。<br>而且由于抢占式调度执行顺序无法确定的特点，使用线程时需要非常小心地处理同步问题，而协程完全不存在这个问题（事件驱动和异步程序也有同样的优点）。</p>
+<p>​    我们在自己在进程里面完成逻辑流调度，碰着i\o我就用非阻塞式的。那么我们即可以利用到异步优势，又可以避免反复系统调用，还有进程切换造成的开销，分分钟给你上几千个逻辑流不费力。这就是协程。</p>
+<h5 id="协程-vs-事件驱动"><a href="#协程-vs-事件驱动" class="headerlink" title="协程 vs 事件驱动"></a>协程 vs 事件驱动</h5><p>​    以nginx为代表的事件驱动的异步server正在横扫天下，那么事件驱动模型会是server端模型的终点吗？<br>我们可以深入了解下，事件驱动编程的模型。<br>事件驱动编程的架构是预先设计一个事件循环，这个事件循环程序不断地检查目前要处理的信息，根据要处理的信息运行一个触发函数。其中这个外部信息可能来自一个目录夹中的文件，可能来自键盘或鼠标的动作，或者是一个时间事件。这个触发函数，可以是系统默认的也可以是用户注册的回调函数。</p>
+<p>​    事件驱动程序设计着重于弹性以及异步化上面。许多GUI框架（如windows的MFC，Android的GUI框架），Zookeeper的Watcher等都使用了事件驱动机制。未来还会有其他的基于事件驱动的作品出现。</p>
+<p>​    基于事件驱动的编程是单线程思维，其特点是异步+回调。<br>协程也是单线程，但是它能让原来要使用异步+回调方式写的非人类代码,可以用看似同步的方式写出来。它是实现推拉互动的所谓非抢占式协作的关键。</p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>协程的好处：</p>
+<ul>
+<li>跨平台</li>
+<li>跨体系架构</li>
+<li>无需线程上下文切换的开销</li>
+<li>无需原子操作锁定及同步的开销</li>
+<li>方便切换控制流，简化编程模型</li>
+<li>高并发+高扩展性+低成本：一个CPU支持上万的协程都不是问题。所以很适合用于高并发处理。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>无法利用多核资源：协程的本质是个单线程,它不能同时将 单个CPU 的多个核用上,协程需要和进程配合才能运行在多CPU上.当然我们日常所编写的绝大部分应用都没有这个必要，除非是cpu密集型应用。</li>
+<li>进行阻塞（Blocking）操作（如IO时）会阻塞掉整个程序：这一点和事件驱动一样，可以使用异步IO操作来解决</li>
+</ul>
+<h3 id="二、死锁"><a href="#二、死锁" class="headerlink" title="二、死锁"></a>二、死锁</h3><h4 id="2-1、资源的分类"><a href="#2-1、资源的分类" class="headerlink" title="2.1、资源的分类"></a>2.1、资源的分类</h4><p>系统中有许多不同类型的资源，需要采用互斥访问方法并且不可被抢占的资源，也就是临界资源。</p>
+<p><strong>使用次数分类</strong>：</p>
+<p>1、可重用性资源</p>
+<p>​    每一个可重用资源中的单元只能分配给一个进程使用，不允许多个进程共享。进程是用资源顺序，1 请求资源，如果请求失败进程阻塞或循环等待。2 使用资源。3释放资源。<br>系统中的可重用资源数目都是相对固定的程序运行时不能增加或删除。</p>
+<p>2、消耗性资源</p>
+<p>​    他是临时资源，有进程运行动态创建和消耗的，每一类消耗性资源单元数目都是不断变化的，通常在生产者进程中创建，在消费者进程中消耗。</p>
+<p><strong>能否抢占分类：</strong></p>
+<p>1、可抢占资源</p>
+<p>​    CPU，主存等可以共享的资源。</p>
+<p>2、不可抢占资源</p>
+<p>​    打印机，光驱等不可共享的资源。</p>
+<p><strong>死锁</strong> <strong>是指两个或两个以上的进程在执行过程中，由于竞争资源或者由于彼此通信而造成的一种阻塞的现象，若无外力作用，它们都将无法推进下去。此时称系统处于死锁状态或系统产生了死锁，这些永远在互相等待的进程称为死锁进程。</strong></p>
+<h4 id="2-2-死锁的形成："><a href="#2-2-死锁的形成：" class="headerlink" title="2.2 死锁的形成："></a><strong>2.2 死锁的形成：</strong></h4><p>​    打个比方，假设有P1和P2两个进程，都需要A和B两个资源，现在P1持有A等待B资源，而P2持有B等待A资源，两个都等待另一个资源而不肯释放资源，就这样无限等待中，这就形成死锁，这也是死锁的一种情况。给死锁下个定义，如果一组进程中每一个进程都在等待仅由该组进程中的其他进程才能引发的事件，那么该组进程是死锁的。</p>
+<p><strong>竞争不可抢占资源引起死锁</strong></p>
+<p>​    也就是我们说的第一种情况，而这都在等待对方占有的不可抢占的资源。</p>
+<p><strong>竞争可消耗资源引起死锁</strong></p>
+<p>​    有p1，p2，p3三个进程，p1向p2发送消息并接受p3发送的消息，p2向p3发送消息并接受p2的消息，p3向p1发送消息并接受p2的消息，如果设置是先接到消息后发送消息，则所有的消息都不能发送，这就造成死锁。</p>
+<p><strong>进程推进顺序不当引起死锁</strong></p>
+<p>​    有进程p1，p2，都需要资源A，B，本来可以p1运行A –&gt; p1运行B –&gt; p2运行A –&gt; p2运行B，但是顺序换了，p1运行A时p2运行B，容易发生第一种死锁。互相抢占资源。</p>
+<h4 id="2-3-产生死锁的必要条件"><a href="#2-3-产生死锁的必要条件" class="headerlink" title="2.3 产生死锁的必要条件"></a><strong>2.3 产生死锁的必要条件</strong></h4><ol>
+<li><strong>互斥条件</strong><br>某资源只能被一个进程使用，其他进程请求该资源时，只能等待，知道资源使用完毕后释放资源。</li>
+<li><strong>请求和保持条件</strong><br>程序已经保持了至少一个资源，但是又提出了新要求，而这个资源被其他进程占用，自己占用资源却保持不放。</li>
+<li><strong>不可抢占条件</strong><br>进程已获得的资源没有使用完，不能被抢占。</li>
+<li><strong>循环等待条件</strong><br>必然存在一个循环链。</li>
+</ol>
+<h4 id="2-4-处理死锁的思路"><a href="#2-4-处理死锁的思路" class="headerlink" title="2.4 处理死锁的思路"></a>2.4 处理死锁的思路</h4><ol>
+<li><strong>预防死锁</strong><br>破坏死锁的四个必要条件中的一个或多个来预防死锁。</li>
+<li><strong>避免死锁</strong><br>和预防死锁的区别就是，在资源动态分配过程中，用某种方式防止系统进入不安全的状态。</li>
+<li><strong>检测死锁</strong><br>运行时出现死锁，能及时发现死锁，把程序解脱出来、</li>
+<li><strong>解除死锁</strong><br>发生死锁后，解脱进程，通常撤销进程，回收资源，再分配给正处于阻塞状态的进程。</li>
+</ol>
+<h4 id="2-5、预防死锁方法"><a href="#2-5、预防死锁方法" class="headerlink" title="2.5、预防死锁方法"></a>2.5、预防死锁方法</h4><ol>
+<li><p><strong>破坏请求和保持条件</strong></p>
+<p>协议1<br>所有进程开始前，必须一次性地申请所需的所有资源，这样运行期间就不会再提出资源要求，破坏了请求条件，即使有一种资源不能满足需求，也不会给它分配正在空闲的资源，这样它就没有资源，就破坏了保持条件，从而预防死锁的发生。</p>
+<p>协议2<br>允许一个进程只获得初期的资源就开始运行，然后再把运行完的资源释放出来。然后再请求新的资源。</p>
+</li>
+<li><p><strong>破坏不可抢占条件</strong><br>当一个已经保持了某种不可抢占资源的进程，提出新资源请求不能被满足时，它必须释放已经保持的所有资源，以后需要时再重新申请。</p>
+</li>
+<li><p><strong>破坏循环等待条件</strong></p>
+<p>对系统中的所有资源类型进行线性排序，然后规定每个进程必须按序列号递增的顺序请求资源。假如进程请求到了一些序列号较高的资源，然后有请求一个序列较低的资源时，必须先释放相同和更高序号的资源后才能申请低序号的资源。多个同类资源必须一起请求。</p>
+</li>
+<li><p>破坏互斥条件</p>
+<p>尽量使得资源不被某个进程独占。比如打印机的假脱机打印，就是尽量避免一个进程独占打印机，而是把要打印的文件存入一个假脱机目录，然后通过一个守护进程管理打印机进行打印</p>
+</li>
+</ol>
+<h3 id="三、内存分页管理与swap"><a href="#三、内存分页管理与swap" class="headerlink" title="三、内存分页管理与swap"></a>三、内存分页管理与swap</h3><h4 id="1、内存分页管理"><a href="#1、内存分页管理" class="headerlink" title="1、内存分页管理"></a>1、内存分页管理</h4><ol>
+<li><h5 id="操作系统——分页式内存管理https-blog-csdn-net-misayaaaaa-article-details-77622202"><a href="#操作系统——分页式内存管理https-blog-csdn-net-misayaaaaa-article-details-77622202" class="headerlink" title="操作系统——分页式内存管理https://blog.csdn.net/misayaaaaa/article/details/77622202"></a>操作系统——分页式内存管理<a href="https://blog.csdn.net/misayaaaaa/article/details/77622202" target="_blank" rel="noopener">https://blog.csdn.net/misayaaaaa/article/details/77622202</a></h5></li>
+<li><h5 id="操作系统内存管理——分页https-blog-csdn-net-iostream1001001-article-details-77124459"><a href="#操作系统内存管理——分页https-blog-csdn-net-iostream1001001-article-details-77124459" class="headerlink" title="操作系统内存管理——分页https://blog.csdn.net/iostream1001001/article/details/77124459"></a>操作系统内存管理——分页<a href="https://blog.csdn.net/iostream1001001/article/details/77124459" target="_blank" rel="noopener">https://blog.csdn.net/iostream1001001/article/details/77124459</a></h5></li>
+</ol>
+<h4 id="2、swap"><a href="#2、swap" class="headerlink" title="2、swap"></a>2、swap</h4><p><a href="http://hbasefly.com/2017/05/24/hbase-linux/?qkhohw=u1vym1" target="_blank" rel="noopener">http://hbasefly.com/2017/05/24/hbase-linux/?qkhohw=u1vym1</a></p>
+<h3 id="四、任务队列与CPU-load"><a href="#四、任务队列与CPU-load" class="headerlink" title="四、任务队列与CPU load"></a>四、任务队列与CPU load</h3><h3 id="五、扩展知识点"><a href="#五、扩展知识点" class="headerlink" title="五、扩展知识点"></a>五、扩展知识点</h3><h4 id="5-1-内存屏障"><a href="#5-1-内存屏障" class="headerlink" title="5.1 内存屏障"></a>5.1 内存屏障</h4><h4 id="5-2-指令乱序"><a href="#5-2-指令乱序" class="headerlink" title="5.2 指令乱序"></a>5.2 指令乱序</h4><h4 id="5-3-分支预测"><a href="#5-3-分支预测" class="headerlink" title="5.3 分支预测"></a>5.3 分支预测</h4><h4 id="5-4-cpu亲和性"><a href="#5-4-cpu亲和性" class="headerlink" title="5.4 cpu亲和性"></a>5.4 cpu亲和性</h4><h4 id="5-5-Netfilter与iptables"><a href="#5-5-Netfilter与iptables" class="headerlink" title="5.5 Netfilter与iptables"></a>5.5 Netfilter与iptables</h4><h4 id="和小专栏https-xiaozhuanlan-com-topic-3748052961一起看"><a href="#和小专栏https-xiaozhuanlan-com-topic-3748052961一起看" class="headerlink" title="和小专栏https://xiaozhuanlan.com/topic/3748052961一起看"></a>和小专栏<a href="https://xiaozhuanlan.com/topic/3748052961" target="_blank" rel="noopener">https://xiaozhuanlan.com/topic/3748052961</a>一起看</h4>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>clong</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://coldwater.com/2019/06/04/操作系统/">http://coldwater.com/2019/06/04/操作系统/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tag/OS/"># OS</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/07/04/TCP的三次握手与四次挥手/">TCP的三次握手与四次挥手</a>
+            
+            
+            <a class="next" rel="next" href="/2019/05/04/RabbitMq-入门程序、整合SpringBoot/">RabbitMq 入门程序、整合SpringBoot</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© clong | JGSU | Powered by Hexo </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
