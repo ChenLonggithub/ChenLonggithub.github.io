@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="description" content="记录每一瞬间">
+
+
+    <meta name="keywords" content="Java、博客、学习、感悟、程序员">
+
+
+<title>Elasticsearch 6.3.1 的安装以及集群 | 水</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Clong&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Clong&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Elasticsearch 6.3.1 的安装以及集群</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">clong</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">九月 15, 2019&nbsp;&nbsp;17:00:00</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="一、单机安装"><a href="#一、单机安装" class="headerlink" title="一、单机安装"></a>一、单机安装</h3><ol>
+<li><p>由于els的文件比较多，所以新建一个文件夹</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir els</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将相关文件上传到els文件中</p>
+</li>
+<li><p>使用命令提升els的权限，有时候会有权限问题，这里测试，打开所有的权限</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod 777 -R elasticsearch-6.3.1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接下来的命令，修改几个文件，确保els正确启动</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">1.cd elasticsearch-6.3.1</span><br><span class="line">2.cd config/</span><br><span class="line">3.vi jvm.options</span><br><span class="line">	将-Xms2g 和 -Xmx2g 改为 -Xms256m 和 -Xmx256m</span><br><span class="line">4. elasticsearch.yml</span><br><span class="line">	将network.host改为自己的IP地址</span><br><span class="line">	将http.port 端口打开</span><br><span class="line">5. /etc/security/limits.conf</span><br><span class="line">	在 # end the file 之前添加四行命令：</span><br><span class="line">	* hard nofile 655360</span><br><span class="line">    * soft nofile 131072</span><br><span class="line">    * hard nproc 4096</span><br><span class="line">    * soft nproc 2048</span><br><span class="line">6. /etc/sysctl.conf</span><br><span class="line">	末尾添加：</span><br><span class="line">	vm.max_map_count=655360</span><br><span class="line">	fs.file-max=655360	</span><br><span class="line">7.sctl -p</span><br><span class="line"><span class="meta">#</span> 配置文件修改完毕</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>由于els6.x的启动不能使用root权限，所以要创建一个非root用户</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">adduser els</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用els用户启动els</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">su els</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>进入els的bin目录,执行命令,使用nohup将日志输入存放到nohup.out中，不影响接下来的shell命令输入，否则打印日志，无法在当前连接在输入命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd elasticsearch-6.3.1/bin</span><br><span class="line">nohup ./elasticsearch</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>游览器输入：<a href="http://192.168.95.121:9200/" target="_blank" rel="noopener">http://192.168.95.121:9200</a>，出现</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"3-emM-W"</span>,</span><br><span class="line">    <span class="attr">"cluster_name"</span>: <span class="string">"elasticsearch"</span>,</span><br><span class="line">    <span class="attr">"cluster_uuid"</span>: <span class="string">"CVvbtAA8STSfA83nvIAStA"</span>,</span><br><span class="line">    <span class="attr">"version"</span>: &#123;</span><br><span class="line">        <span class="attr">"number"</span>: <span class="string">"6.3.1"</span>,</span><br><span class="line">        <span class="attr">"build_flavor"</span>: <span class="string">"default"</span>,</span><br><span class="line">        <span class="attr">"build_type"</span>: <span class="string">"tar"</span>,</span><br><span class="line">        <span class="attr">"build_hash"</span>: <span class="string">"eb782d0"</span>,</span><br><span class="line">        <span class="attr">"build_date"</span>: <span class="string">"2018-06-29T21:59:26.107521Z"</span>,</span><br><span class="line">        <span class="attr">"build_snapshot"</span>: <span class="literal">false</span>,</span><br><span class="line">        <span class="attr">"lucene_version"</span>: <span class="string">"7.3.1"</span>,</span><br><span class="line">        <span class="attr">"minimum_wire_compatibility_version"</span>: <span class="string">"5.6.0"</span>,</span><br><span class="line">        <span class="attr">"minimum_index_compatibility_version"</span>: <span class="string">"5.0.0"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"tagline"</span>: <span class="string">"You Know, for Search"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用kibana-6.3.1工具</p>
+</li>
+<li><p>解压kibana-6.3.1，可能货没有权限，切入到root用户，解压后，进入到config目录，①将els的地址信息打开，将localhost改为自己的IP地址，②将kibana-6.3.1的host打开，并写入：“0.0.0.0”</p>
+</li>
+<li><p>启动，进入到bin目录，nohup  ./kibana &amp; 启动成功。</p>
+</li>
+<li><p>安装中文分词器：进入目录：cd /opt/els/elasticsearch-6.3.1/plugins，将插件导入文件中，解压即可</p>
+</li>
+</ol>
+<h3 id="二、ElasticSerach集群安装"><a href="#二、ElasticSerach集群安装" class="headerlink" title="二、ElasticSerach集群安装"></a>二、ElasticSerach集群安装</h3><p>另一个机器上，安装和配置els，如上，两个机器修改配置文件elasticserach.yml</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim /elasticsearch.yml</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cluster.name: aubin-cluster     #必须相同 </span><br><span class="line"><span class="meta">#</span> 集群名称（不能重复）</span><br><span class="line"></span><br><span class="line">node.name: els1（必须不同）</span><br><span class="line"><span class="meta">#</span> 节点名称，仅仅是描述名称，用于在日志中区分（自定义）</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>指定了该节点可能成为 master 节点，还可以是数据节点</span><br><span class="line">node.master: true</span><br><span class="line">node.data: true</span><br><span class="line"></span><br><span class="line">path.data: /opt/data</span><br><span class="line"><span class="meta">#</span> 数据的默认存放路径（自定义）</span><br><span class="line"></span><br><span class="line">path.logs: /opt/logs </span><br><span class="line"><span class="meta">#</span> 日志的默认存放路径 </span><br><span class="line"></span><br><span class="line">network.host: 192.168.0.1 </span><br><span class="line"><span class="meta">#</span> 当前节点的IP地址</span><br><span class="line"></span><br><span class="line">http.port: 9200 </span><br><span class="line"><span class="meta">#</span> 对外提供服务的端口</span><br><span class="line"></span><br><span class="line">transport.tcp.port: 9300</span><br><span class="line"><span class="meta">#</span>9300为集群服务的端口 </span><br><span class="line"></span><br><span class="line">discovery.zen.ping.unicast.hosts: ["172.18.68.11", "172.18.68.12","172.18.68.13"] </span><br><span class="line"><span class="meta">#</span> 集群个节点IP地址，也可以使用域名，需要各节点能够解析 </span><br><span class="line"></span><br><span class="line">discovery.zen.minimum_master_nodes: 2 </span><br><span class="line"><span class="meta">#</span> 为了避免脑裂，集群节点数最少为 半数+1</span><br></pre></td></tr></table></figure>
+
+<p>注意：清空data和logs数据，和给权限</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>clong</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://coldwater.com/2019/09/16/Elasticsearch-6-3-1-的安装以及集群/">http://coldwater.com/2019/09/16/Elasticsearch-6-3-1-的安装以及集群/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tag/Elasticsearch/"># Elasticsearch</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/09/16/elasticsearch原理相关/">Elasticsearch 原理相关</a>
+            
+            
+            <a class="next" rel="next" href="/2019/09/04/Redis/">Redis的相关</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Clong | Jgsu </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
